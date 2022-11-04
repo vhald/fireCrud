@@ -279,7 +279,7 @@ export default function AddPost({navigation, route}) {
           style={{
             backgroundColor: '#f3aaaa',
             borderRadius: 5,
-            height: 36,
+            height: 16,
             justifyContent: 'center',
             alignItems: 'center',
             marginRight: 26,

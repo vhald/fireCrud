@@ -3,10 +3,10 @@ import newsCategoriesReducer from './Reducers/newsCategoriesReducer';
 import newsPostsReducer from './Reducers/newsPostsReducer';
 import newsCommentsReducer from './Reducers/newsCommentsReducer';
 import thunk from 'redux-thunk';
-import storage from 'redux-persist/lib/storage';
+// import storage from 'redux-persist/lib/storage';
 // import {persistStore, persistReducer} from 'redux-persist';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import rootReducer from './Reducers';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+// import rootReducer from './Reducers';
 
 // //enhancer : 1. thunk 2.
 // //27 sept for devtools

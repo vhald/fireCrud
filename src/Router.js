@@ -69,7 +69,7 @@ export const BotTabs = () => {
           } else if (route.name === 'add') {
             iconName = focused ? 'at' : 'ios-list';
           } else if (route.name === 'addcategory') {
-            iconName = focused ? 'ios-list-box' : 'ios-list';
+            iconName = focused ? 'ios-list' : 'ios-list';
           } else if (route.name === 'categorylist') {
             iconName = focused
               ? 'ios-information-circle'

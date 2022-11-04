@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 // import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -14,6 +15,7 @@ import toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {WebView} from 'react-native-webview';
 
 // GoogleSignin.configure({
 //   scopes: ['https://www.googleapis.com/auth/drive.readonly'], // what API you want to access on behalf of the user, default is email and profile
@@ -40,74 +42,6 @@ const Login = ({navigation, route}) => {
   const onChangePassword = text => {
     setState(prev => ({...prev, password: text}));
   };
-
-  // TODO:  left to do submit button
-
-  // const submitForm = async () => {
-  //   // email validation starts here //
-  //   const email = String(state.email).trim().toLowerCase();
-  //   const pattern =
-  //     /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-  //   var email_test = pattern.test(email); // true , false
-  //   if (email_test === false) {
-  //     setState(prev => ({...prev, emailTestFail: true}));
-  //     return;
-  //   }
-  //   if (email_test) {
-  //     setState(prev => ({...prev, emailTestFail: false}));
-  //   }
-  //   // email validation ends here //
-
-  //   // password validation starts here //
-  //   const password = String(state.password).trim();
-  //   if (password.length >= 6) {
-  //     setState(prev => ({...prev, passwordTestFail: false}));
-  //   } else {
-  //     setState(prev => ({...prev, passwordTestFail: true}));
-  //     return;
-  //   }
-
-  //   auth()
-  //     .signInWithEmailAndPassword(email, password)
-  //     .then(response => {
-  //       //console.log(._user.uid)
-  //       var currentUser = auth().currentUser; //null
-  //       if (currentUser !== null) {
-  //         var uid = currentUser._user.uid;
-  //         console.log('uid', uid);
-  //       }
-
-  //       // console.log('we are logged in successfully',response)
-  //       //toast.show('this is the uid we got.',response.user.uid, typeof(response.user))
-  //       // var uid = response.user.uid
-  //       toast.show('You are loggedin successfully');
-  //       AsyncStorage.setItem('@uid', uid);
-  //       setTimeout(() => {
-  //         //navigation.navigate('home')
-  //       }, 1500);
-  //     })
-  //     .catch(err => {
-  //       console.log('error to login', err);
-  //       toast.show('error to login');
-  //     });
-
-  //   // password Validation ends here //
-  // };
-
-  // const validEmail = () => {
-  //   console.log('this line will trigger when we remove focus from email input');
-  //   const pattern =
-  //     /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-  //   console.log(pattern.test(state.email));
-  //   setState(prev => ({...prev, emailTestFail: !pattern.test(state.email)}));
-  // };
-
-  // const validPassword = () => {
-  //   console.log('this is inside password validator');
-  //   var pass = String(state.password).trim();
-  //   console.log('password typed', pass);
-  //   setState(prev => ({...prev, passwordTestFail: !(pass.length > 6)}));
-  // };
 
   const onSubmit = () => {
     // email verification starts  HACK:  onBlur's logic
@@ -170,6 +104,11 @@ const Login = ({navigation, route}) => {
     // Sign-in the user with the credential
     return auth().signInWithCredential(googleCredential);
   };
+
+  const TermsAndCond = () => {
+    return <WebView source={{uri: 'https://reactnative.dev/'}} />;
+  };
+
   return (
     <View
       style={{

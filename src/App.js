@@ -250,7 +250,7 @@ const HomePage = ({navigation, route, params}) => {
         }}
       /> */}
       {/*  */}
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => navigation.navigate('addcategory')}
         style={{
           position: 'absolute',
@@ -266,9 +266,9 @@ const HomePage = ({navigation, route, params}) => {
           top: 10,
         }}>
         {add}
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={() => navigation.navigate('categorylist')}
         style={{
           marginLeft: 20,
@@ -279,7 +279,7 @@ const HomePage = ({navigation, route, params}) => {
           backgroundColor: 'white',
         }}>
         {menu}
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
       {/* --  */}
 
@@ -340,7 +340,7 @@ const HomePage = ({navigation, route, params}) => {
         }}>
         <Text style={{color: 'red', fontWeight: 'bold'}}>{filter}</Text>
       </TouchableOpacity>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={{
           position: 'absolute',
           width: 50,
@@ -359,8 +359,8 @@ const HomePage = ({navigation, route, params}) => {
           navigation.navigate('PushNotif');
         }}>
         <Text style={{color: 'red', fontWeight: 'bold'}}>{bell}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
+      </TouchableOpacity> */}
+      {/* <TouchableOpacity
         style={{
           position: 'absolute',
           width: 40,
@@ -378,7 +378,7 @@ const HomePage = ({navigation, route, params}) => {
           navigation.navigate('Share');
         }}>
         <Text style={{color: 'black'}}>{share}</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
       {state.loading !== true && (
         <ActivityIndicator size="large" color="blue" />
       )}
