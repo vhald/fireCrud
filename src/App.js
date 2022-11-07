@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,25 +13,26 @@ import {
   Button,
   DevSettings,
 } from 'react-native';
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/AntDesign';
 import firestore from '@react-native-firebase/firestore';
 import toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import DropDownPicker from 'react-native-dropdown-picker';
 import _ from 'lodash';
 // import PushController from './Screens/PushNotif';
-import {deleteNews, getAllNews} from './redux/Actions/postActions';
-import {getCategory} from './redux/store/categoryActions';
+import { deleteNews, getAllNews } from './redux/Actions/postActions';
+import { getCategory } from './redux/store/categoryActions';
+import { GETNEWSPOST } from './redux/Reducers/newsPostsReducer';
 
 const bell = (
   <Icon
     name="bells"
     size={30}
     color={'red'}
-    style={{padding: 20, alignContent: 'flex-start'}}
+    style={{ padding: 20, alignContent: 'flex-start' }}
   />
 );
 const user = (
@@ -39,7 +40,7 @@ const user = (
     name="user"
     size={30}
     color={'#111'}
-    style={{padding: 20, alignContent: 'flex-start'}}
+    style={{ padding: 20, alignContent: 'flex-start' }}
   />
 );
 const filter = (
@@ -47,7 +48,7 @@ const filter = (
     name="filter"
     size={30}
     color={'#f1f1d1'}
-    style={{padding: 20, alignContent: 'flex-start'}}
+    style={{ padding: 20, alignContent: 'flex-start' }}
   />
 );
 const del = (
@@ -55,7 +56,7 @@ const del = (
     name="delete"
     size={20}
     color={'red'}
-    style={{padding: 20, alignContent: 'flex-start'}}
+    style={{ padding: 20, alignContent: 'flex-start' }}
   />
 );
 const add = (
@@ -63,7 +64,7 @@ const add = (
     name="pluscircle"
     size={20}
     color={'#777'}
-    style={{padding: 20, alignContent: 'flex-start'}}
+    style={{ padding: 20, alignContent: 'flex-start' }}
   />
 );
 const edit = (
@@ -71,7 +72,7 @@ const edit = (
     name="edit"
     size={20}
     color={'black'}
-    style={{padding: 20, alignContent: 'flex-start'}}
+    style={{ padding: 20, alignContent: 'flex-start' }}
   />
 );
 const share = (
@@ -79,12 +80,12 @@ const share = (
     name="sharealt"
     size={20}
     color={'black'}
-    style={{padding: 20, alignContent: 'flex-start'}}
+    style={{ padding: 20, alignContent: 'flex-start' }}
   />
 );
 const menu = <Icon name={'menufold'} size={24} color={'blue'} />;
 
-const HomePage = ({navigation, route, params}) => {
+const HomePage = ({ navigation, route, params }) => {
   const dispatch = useDispatch();
   const posts = useSelector(state => state.posts.newsposts);
   // console.log('Post data here: ', posts);
@@ -97,17 +98,60 @@ const HomePage = ({navigation, route, params}) => {
   });
 
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([]);
+  const [value, setValue] = useState([]);
+  const [items, setItems] = useState([{ label: 'Apple', value: 'apple' },
+  { label: 'Banana', value: 'banana' }]);
+
+  console.log("Selected data:===================================== ", value)
+
+  useEffect(() => {
+    if (value.length > 0) {
+      firestore()
+        .collection('ghosts')
+        .get()
+        .then(getData => {
+          const data = [];
+          getData.docs.map(each => {
+            if (value.includes(each.data()?.categoryID)) {
+              console.log(each.data()?.categoryID)
+              data.push({ ...each.data(), id: each.id })
+              dispatch({
+                type: GETNEWSPOST,
+                payload: data,
+                // payload: [{id: 'gILjZIkof8zDI5fNFRNx', title: 'First Post'}],
+                // description: 'some description',
+                // });
+              });
+            }
+
+          });
+        })
+        .catch(error => {
+          console.log('error', error);
+          setState(prev => ({ ...prev, loading: false }));
+          toast.show('network problem', toast.LONG);
+        });
+    }
+    else {
+      dispatch(getAllNews());
+    }
+  }, [value])
 
   // const [visited, setVisited] = useState([])
+
+  const categories = useSelector(state => state.categories.newsCategories);
   const [VisitedItem, setVisited] = useState([]);
 
   // it works like a state variable
 
   useEffect(() => {
+    if (categories)
+      setItems(categories)
+  }, [categories])
+  useEffect(() => {
     console.log('redux post before after', posts);
   }, [posts]);
+
 
   useEffect(() => {
     // getData();
@@ -137,18 +181,19 @@ const HomePage = ({navigation, route, params}) => {
     var myData = [];
     firestore()
       .collection('ghosts')
+      .where()
       .get()
       .then(getData => {
         console.log('getData', getData);
         getData.docs.map(each => {
           console.log('data', each.data(), each.id);
-          myData.push({...each.data(), id: each.id});
-          setState(prev => ({...prev, loading: false, data: myData}));
+          myData.push({ ...each.data(), id: each.id });
+          setState(prev => ({ ...prev, loading: false, data: myData }));
         });
       })
       .catch(error => {
         console.log('error', error);
-        setState(prev => ({...prev, loading: false}));
+        setState(prev => ({ ...prev, loading: false }));
         toast.show('network problem', toast.LONG);
       });
   };
@@ -219,7 +264,7 @@ const HomePage = ({navigation, route, params}) => {
       image: data.image,
       category: data.categoryName,
     });
-    const {id} = data;
+    const { id } = data;
     const tempVisited = VisitedItem;
     if (tempVisited.indexOf(id) == -1) {
       tempVisited.push(id);
@@ -297,8 +342,8 @@ const HomePage = ({navigation, route, params}) => {
           right: '35%',
           zIndex: 999,
         }}
-        onPress={() => navigation.navigate('Add', {reloadData: getData})}>
-        <Text style={{color: 'red', fontWeight: 'bold'}}> {add} Add News</Text>
+        onPress={() => navigation.navigate('add', { reloadData: getData })}>
+        <Text style={{ color: 'red', fontWeight: 'bold' }}> {add} Add News</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={{
@@ -319,7 +364,7 @@ const HomePage = ({navigation, route, params}) => {
           auth().signOut();
           await GoogleSignin.signOut();
         }}>
-        <Text style={{color: 'red', fontWeight: 'bold'}}>{user}</Text>
+        <Text style={{ color: 'red', fontWeight: 'bold' }}>{user}</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={{
@@ -338,7 +383,7 @@ const HomePage = ({navigation, route, params}) => {
         onPress={() => {
           navigation.navigate('addcategory');
         }}>
-        <Text style={{color: 'red', fontWeight: 'bold'}}>{filter}</Text>
+        <Text style={{ color: 'red', fontWeight: 'bold' }}>{filter}</Text>
       </TouchableOpacity>
       {/* <TouchableOpacity
         style={{
@@ -382,7 +427,7 @@ const HomePage = ({navigation, route, params}) => {
       {state.loading !== true && (
         <ActivityIndicator size="large" color="blue" />
       )}
-      <View style={{height: 60}}>
+      <View style={{ height: 60 }}>
         {/* <Text
           style={{
             color: 'red',
@@ -423,7 +468,7 @@ const HomePage = ({navigation, route, params}) => {
               '#00b4d8',
               '#e9c46a',
             ]}
-            style={{width: '50%', alignSelf: 'center'}}
+            style={{ width: '50%', alignSelf: 'center' }}
           />
         </View>
       </View>
@@ -432,7 +477,7 @@ const HomePage = ({navigation, route, params}) => {
           <TouchableOpacity
             onPress={() => {
               description(data);
-              navigation.navigate('Details', {
+              navigation.navigate('detail', {
                 id: data.id,
                 title: data.title,
                 description: data.description,
@@ -460,7 +505,7 @@ const HomePage = ({navigation, route, params}) => {
                   flexDirection: 'row',
                   justifyContent: 'space-between',
                 }}>
-                <View style={{flex: 1}}>
+                <View style={{ flex: 1 }}>
                   <Text
                     style={{
                       color: 'black',
@@ -469,7 +514,7 @@ const HomePage = ({navigation, route, params}) => {
                     }}>
                     {data.title}
                   </Text>
-                  <Text style={{color: 'green', fontSize: 12}}>
+                  <Text style={{ color: 'green', fontSize: 12 }}>
                     {data.categoryName}
                   </Text>
                   <Text
@@ -481,7 +526,7 @@ const HomePage = ({navigation, route, params}) => {
                     }}>
                     {data.description}
                   </Text>
-                  <Text style={{color: 'grey'}}>Click to read more ...</Text>
+                  <Text style={{ color: 'grey' }}>Click to read more ...</Text>
                 </View>
                 <View
                   style={{
@@ -490,10 +535,10 @@ const HomePage = ({navigation, route, params}) => {
                     alignItems: 'flex-end',
                   }}>
                   <Image
-                    style={{width: 200, height: 120}}
-                    source={{uri: data.image}}
+                    style={{ width: 200, height: 120 }}
+                    source={{ uri: data.image }}
                   />
-                  <View style={{flexDirection: 'row'}}>
+                  <View style={{ flexDirection: 'row' }}>
                     <TouchableOpacity
                       onPress={() => {
                         navigation.navigate('Edit', {
