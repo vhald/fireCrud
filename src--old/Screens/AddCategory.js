@@ -25,7 +25,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  getCategory,
+  getcategories,
   addcategory,
   loaderStatus,
 } from '../redux/Actions/categoryActions';
@@ -97,8 +97,6 @@ function AddCategory({ navigation, route, navigation: { goBack } }) {
     dispatch(loaderStatus(true));
 
     dispatch(addcategory(data));
-
-
   };
 
   //model for category creating
@@ -115,7 +113,7 @@ function AddCategory({ navigation, route, navigation: { goBack } }) {
   };
 
   useEffect(() => {
-    //SelectCategories();
+    SelectCategories();
 
     // firestore().collection('newscategories').get()
     // .then(res => {
@@ -145,11 +143,11 @@ function AddCategory({ navigation, route, navigation: { goBack } }) {
     );
   };
 
-  // const SelectCategories = async () => {
-  //   //const getcategory = await getcategories()
-  //   //console.log('getcategories',getcategory)
-  //
-  // };
+  const SelectCategories = async () => {
+    //const getcategory = await getcategories()
+    //console.log('getcategories',getcategory)
+    dispatch(getcategories(true));
+  };
 
   // const SelectCategories = () => {
   //   firestore()

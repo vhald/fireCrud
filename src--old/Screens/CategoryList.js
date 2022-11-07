@@ -28,7 +28,7 @@ const CategoryList = ({ navigation }) => {
   const [sectiondata, set_sectiondata] = useState([]);
 
   useEffect(() => {
-    //dispatch(getCategory());
+    dispatch(getCategory(false));
     console.log(categories);
   }, []);
 

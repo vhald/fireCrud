@@ -74,7 +74,7 @@ export default function AddPost({navigation, route}) {
 
   useEffect(() => {
     // selectCategory(state);
-    //selectedCategory();
+    selectedCategory();
   }, []);
 
   const ImagePick = () => {
@@ -165,7 +165,7 @@ export default function AddPost({navigation, route}) {
   const selectedCategory = async () => {
     // const getCat = await getCategory();
     // console.log('get cate', getCat);
-    //dispatch(getCategory());
+    dispatch(getCategory());
   };
 
   // const selectCategory = () => {
@@ -289,7 +289,7 @@ export default function AddPost({navigation, route}) {
             marginRight: 26,
             width: '50%',
           }}
-          onPress={Submit}>
+          onPress={() => Submit()}>
           <Text style={{color: 'black', alignItems: 'center'}}>Add A Post</Text>
         </TouchableOpacity>
       </View>

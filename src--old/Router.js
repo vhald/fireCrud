@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import React, {useState, useEffect} from 'react';
+import {View, Text} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomePage from './App';
@@ -22,9 +22,9 @@ import auth from '@react-native-firebase/auth';
 import messaging from '@react-native-firebase/messaging';
 import SplashScreen from 'react-native-splash-screen';
 
-import { useDispatch } from 'react-redux'
-import { getCategory } from './redux/Actions/categoryActions';
-
+import {Provider, useDispatch} from 'react-redux';
+import store from './redux/store';
+import {getCategory} from './redux/Actions/categoryActions';
 
 const ReadGroupStack = createNativeStackNavigator();
 const Stack = createNativeStackNavigator();
@@ -37,7 +37,7 @@ const MyDrawer = () => {
       <Drawer.Screen
         name="tabs"
         component={BotTabs}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
     </Drawer.Navigator>
   );
@@ -49,7 +49,7 @@ export const ReadGroup = () => {
       <ReadGroupStack.Screen
         name="read"
         component={HomePage}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <ReadGroupStack.Screen name="edit" component={EditPage} />
       <ReadGroupStack.Screen name="detail" component={DetailPage} />
@@ -59,8 +59,8 @@ export const ReadGroup = () => {
 export const BotTabs = () => {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
           let iconName;
 
           if (route.name === 'readgroup') {
@@ -85,7 +85,7 @@ export const BotTabs = () => {
       <Tab.Screen
         name="readgroup"
         component={ReadGroup}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Tab.Screen name="add" component={AddPost} />
       <Tab.Screen name="addcategory" component={AddCategory} />
@@ -95,8 +95,9 @@ export const BotTabs = () => {
 };
 
 function App(props) {
-  const dispatch = useDispatch()
-  const [state, setState] = useState({ loading: true, currentUser: null });
+  const [state, setState] = useState({loading: true, currentUser: null});
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     SplashScreen.hide();
@@ -108,10 +109,10 @@ function App(props) {
       if (user) {
         var uid = user.uid;
         console.log('uid onAuthStateChanged', uid);
-        setState(prev => ({ ...prev, currentUser: uid, loading: false }));
+        setState(prev => ({...prev, currentUser: uid, loading: false}));
       } else {
         console.log('user is signout');
-        setState(prev => ({ ...prev, currentUser: null, loading: false }));
+        setState(prev => ({...prev, currentUser: null, loading: false}));
       }
     });
 
@@ -182,11 +183,11 @@ function App(props) {
   const loginPage = () => {
     const currentUser = auth().currentUser;
     //console.log('currentUser on router page',currentUser)
-    setstate(prev => ({ ...prev, currentUser, loading: false }));
+    setstate(prev => ({...prev, currentUser, loading: false}));
   };
 
   return (
-
+    <Provider store={store}>
       <NavigationContainer>
         <Stack.Navigator>
           {!state.currentUser ? (
@@ -196,7 +197,7 @@ function App(props) {
               <Stack.Screen
                 name="home"
                 component={MyDrawer}
-                options={{ headerShown: false }}
+                options={{headerShown: false}}
               />
               {/* <Stack.Screen name="Add" component={AddPage} />
               <Stack.Screen name="Details" component={DetailPage} />
@@ -210,6 +211,7 @@ function App(props) {
           )}
         </Stack.Navigator>
       </NavigationContainer>
+    </Provider>
   );
 }
 
