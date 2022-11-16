@@ -105,9 +105,9 @@ const Login = ({navigation, route}) => {
     return auth().signInWithCredential(googleCredential);
   };
 
-  const TermsAndCond = () => {
-    return <WebView source={{uri: 'https://reactnative.dev/'}} />;
-  };
+  // const TermsAndCond = () => {
+  // return <WebView source={{uri: 'https://reactnative.dev/'}} />;
+  // };
 
   return (
     <View
@@ -257,7 +257,9 @@ const Login = ({navigation, route}) => {
             borderRadius: 30,
             justifyContent: 'center',
             alignItems: 'center',
-          }}>
+          }}
+          // onPress=
+        >
           <Text style={{color: 'black'}}>Google SignIn</Text>
         </TouchableOpacity>
       </View>

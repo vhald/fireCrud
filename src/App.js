@@ -174,7 +174,6 @@ const HomePage = ({navigation, route, params}) => {
     var myData = [];
     firestore()
       .collection('ghosts')
-      .where()
       .get()
       .then(getData => {
         console.log('getData', getData);
@@ -326,8 +325,8 @@ const HomePage = ({navigation, route, params}) => {
           position: 'absolute',
           width: 110,
           padding: 5,
-          height: 50,
-          borderRadius: 25,
+          height: 40,
+          borderRadius: 35,
           backgroundColor: '#8fa',
           justifyContent: 'center',
           alignItems: 'center',
