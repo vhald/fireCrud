@@ -65,24 +65,9 @@ const EditPage = ({navigation, route}) => {
     console.log('Inside body: ' + body);
     console.log('Inside body: ' + id);
     console.log('Inside category: ' + categoryName);
-    // console.log('triggered');
     dispatch(addNews(data));
     navigation.goBack();
     route.params.reloadData();
-    // firestore()
-    //   .collection('ghosts')
-    //   .doc(id)
-    //   .update({title: head, description: body, categoryName: category})
-    //   .then(res => {
-    //     console.log('response', res);
-    //     // toast.show('Item updated successfully');
-    //     navigation.navigate('Home');
-    //     route.params.reloadData();
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //     // toast.show('error in updating');
-    //   });
   };
 
   return (

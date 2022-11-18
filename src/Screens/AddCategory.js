@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   TouchableOpacity,
   Text,
@@ -11,7 +11,7 @@ import {
   ActivityIndicator,
   FlatList,
 } from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import toast from 'react-native-simple-toast';
 import firestore from '@react-native-firebase/firestore';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -22,14 +22,14 @@ import axios from 'axios';
 import _ from 'lodash';
 import Moment from 'moment';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { useDispatch, useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 import {
   getCategory,
   addcategory,
   loaderStatus,
 } from '../redux/Actions/categoryActions';
-import { GETNEWSCATEGORIES } from '../redux/Reducers/newsCategoriesReducer';
+import {GETNEWSCATEGORIES} from '../redux/Reducers/newsCategoriesReducer';
 
 const colorScheme = Appearance.getColorScheme();
 
@@ -40,7 +40,7 @@ const styles = {
     fontSize: 15,
   },
 };
-function AddCategory({ navigation, route, navigation: { goBack } }) {
+function AddCategory({navigation, route, navigation: {goBack}}) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [name, setName] = useState('');
@@ -75,7 +75,7 @@ function AddCategory({ navigation, route, navigation: { goBack } }) {
     if (items.length > 0) {
       let tmp = _.filter(items, each => each.parentID === null);
       set_dropdownData([
-        { label: 'Select an item', value: null, parentID: null },
+        {label: 'Select an item', value: null, parentID: null},
         ...tmp,
       ]);
     }
@@ -97,14 +97,12 @@ function AddCategory({ navigation, route, navigation: { goBack } }) {
     dispatch(loaderStatus(true));
 
     dispatch(addcategory(data));
-
-
   };
 
   //model for category creating
-  const [state, setState] = useState({ data: [] });
+  const [state, setState] = useState({data: []});
   const [isModalVisible, setModalVisible] = useState(false);
-  const [select, setSelect] = useState({ name: 'Select Category...', id: null }); //string // object name , id
+  const [select, setSelect] = useState({name: 'Select Category...', id: null}); //string // object name , id
 
   const onSelectItem = item => {
     setSelect(item);
@@ -114,23 +112,23 @@ function AddCategory({ navigation, route, navigation: { goBack } }) {
     setModalVisible(!isModalVisible);
   };
 
-  useEffect(() => {
-    //SelectCategories();
+  // useEffect(() => {
+  //   //SelectCategories();
 
-    // firestore().collection('newscategories').get()
-    // .then(res => {
-    //     res.docs.map(each => {
-    //       firestore().collection('newscategories').doc(each.id).set({ parentID: null }, { merge: true })
-    //     })
-    // })
-  }, []);
+  //   // firestore().collection('newscategories').get()
+  //   // .then(res => {
+  //   //     res.docs.map(each => {
+  //   //       firestore().collection('newscategories').doc(each.id).set({ parentID: null }, { merge: true })
+  //   //     })
+  //   // })
+  // }, []);
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({item}) => {
     return (
-      <View style={{ backgroundColor: 'white' }}>
+      <View style={{backgroundColor: 'white'}}>
         <TouchableOpacity
           onPress={() => onSelectItem(item)}
-          style={{ height: 60 }}>
+          style={{height: 60}}>
           <Text
             style={{
               color: 'black',
@@ -178,20 +176,20 @@ function AddCategory({ navigation, route, navigation: { goBack } }) {
   //
   // };
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{flex: 1}}>
       {loading && (
         <ActivityIndicator size="large" color="blue" animating={true} />
       )}
 
-      <Text style={{ color: 'black', fontSize: 24, paddingVertical: 30 }}>
+      <Text style={{color: 'black', fontSize: 24, paddingVertical: 30}}>
         Add A Category
       </Text>
 
       <KeyboardAwareScrollView>
-        <View style={{ height: 400, paddingHorizontal: 10 }}>
+        <View style={{height: 400, paddingHorizontal: 10}}>
           <Text>
             Category Name{' '}
-            <Text style={{ color: 'red', fontSize: 9 }}>
+            <Text style={{color: 'red', fontSize: 9}}>
               (min 100 characters)
             </Text>
           </Text>

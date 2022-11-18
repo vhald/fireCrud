@@ -13,8 +13,6 @@ import toast from 'react-native-simple-toast';
 import thunk from 'redux-thunk';
 
 export const getAllNews = () => {
-  // console.log('calling getallnews')
-
   return dispatch => {
     firestore()
       .collection('ghosts')
@@ -24,7 +22,6 @@ export const getAllNews = () => {
         getData.docs.map(each => {
           rowData.push({...each.data(), id: each.id});
         });
-
         // 1. CALL THE API
         // 2. DISPATCH THE FUNCT
         dispatch({

@@ -247,7 +247,7 @@ const HomePage = ({navigation, route, params}) => {
   };
 
   const description = async data => {
-    // console.log('Data: ' + JSON.stringify(data));
+    console.log('Data: ' + JSON.stringify(data));
     // console.log('VisitedItem: ', VisitedItem);
     navigation.navigate('Details', {
       id: data.id,
@@ -317,8 +317,6 @@ const HomePage = ({navigation, route, params}) => {
         }}>
         {menu}
       </TouchableOpacity> */}
-
-      {/* --  */}
 
       <TouchableOpacity
         style={{
@@ -484,8 +482,8 @@ const HomePage = ({navigation, route, params}) => {
                   borderWidth: 1,
                   borderColor: 'grey',
                   padding: 10,
-                  width: '95%',
-                  height: 220,
+                  // width: '95%',
+                  // height: 220,
                   margin: 10,
                   borderRadius: 10,
                   backgroundColor:

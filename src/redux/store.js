@@ -1,7 +1,7 @@
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux';
 import newsCategoriesReducer from './Reducers/newsCategoriesReducer';
 import newsPostsReducer from './Reducers/newsPostsReducer';
-import newsCommentsReducer from './Reducers/newsCommentsReducer';
+// import newsCommentsReducer from './Reducers/newsCommentsReducer';
 import thunk from 'redux-thunk';
 // import storage from 'redux-persist/lib/storage';
 // import {persistStore, persistReducer} from 'redux-persist';
@@ -24,7 +24,7 @@ if (__DEV__) {
 const reducers = combineReducers({
   posts: newsPostsReducer,
   categories: newsCategoriesReducer,
-  comments: newsCommentsReducer,
+  // comments: newsCommentsReducer,
 });
 
 const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)));

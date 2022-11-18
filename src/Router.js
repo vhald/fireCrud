@@ -11,10 +11,7 @@ import HomePage from './App';
 import AddPost from './Screens/AddPage';
 import DetailPage from './Screens/DetailPage';
 import EditPage from './Screens/EditPage';
-import RoughPage from './Screens/RoughPage';
 import LoginPage from './Screens/LoginPage';
-import PushNotif from './Screens/PushNotif';
-import ShareLib from './Screens/ShareLib';
 import AddCategory from './Screens/AddCategory';
 import CategoryList from './Screens/CategoryList';
 
@@ -51,7 +48,11 @@ export const ReadGroup = () => {
         options={{headerShown: false}}
       />
       <ReadGroupStack.Screen name="edit" component={EditPage} />
-      <ReadGroupStack.Screen name="detail" component={DetailPage} />
+      <ReadGroupStack.Screen
+        name="detail"
+        component={DetailPage}
+        options={{headerShown: false}}
+      />
     </ReadGroupStack.Navigator>
   );
 };
@@ -63,13 +64,11 @@ export const BotTabs = () => {
           let iconName;
 
           if (route.name === 'readgroup') {
-            iconName = focused
-              ? 'ios-information-circle'
-              : 'ios-information-circle-outline';
+            iconName = focused ? 'ios-albums' : 'ios-albums-outline';
           } else if (route.name === 'add') {
-            iconName = focused ? 'at' : 'ios-list';
+            iconName = focused ? 'ios-duplicate' : 'ios-duplicate-outline';
           } else if (route.name === 'addcategory') {
-            iconName = focused ? 'ios-list' : 'ios-list';
+            iconName = focused ? 'md-pricetags' : 'md-pricetags-outline';
           } else if (route.name === 'categorylist') {
             iconName = focused
               ? 'ios-information-circle'
@@ -200,13 +199,7 @@ function App(props) {
         {!state.currentUser ? (
           <Stack.Screen name="Login" component={LoginPage} />
         ) : (
-          <>
-            <Stack.Screen
-              name="home"
-              component={MyDrawer}
-              // screenOptions={{headerShown: false}}
-            />
-          </>
+          <Stack.Screen name="home" component={MyDrawer} />
         )}
       </Stack.Navigator>
     </NavigationContainer>

@@ -114,8 +114,6 @@ export default function AddPost({navigation, route}) {
 
       console.log('catName: ', catName[0].label);
 
-      // return;
-
       var data = {
         id: `${uniqueName}`,
         title: String(title).trim(),
