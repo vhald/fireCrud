@@ -20,7 +20,7 @@ export const getAllNews = () => {
       .then(getData => {
         var rowData = [];
         getData.docs.map(each => {
-          rowData.push({...each.data(), id: each.id});
+          rowData.push({ ...each.data(), id: each.id });
         });
         // 1. CALL THE API
         // 2. DISPATCH THE FUNCT
@@ -68,10 +68,10 @@ export const addNews = all => {
       .collection('ghosts')
       .add(all)
       .then(res => {
-        dispatch({type: SUCCESSADDEDNEWS, payload: 'post_added'});
+        dispatch({ type: SUCCESSADDEDNEWS, payload: 'post_added' });
       })
       .catch(error => {
-        dispatch({type: ERRORADDEDNEWS, payload: 'network_error'});
+        dispatch({ type: ERRORADDEDNEWS, payload: 'network_error' });
       });
   };
 };
@@ -84,7 +84,7 @@ export const updateNews = data => {
       var res = firestore()
         .collection('ghosts')
         .doc(id)
-        .update({title: head, description: body, categoryName: category});
+        .update({ title: head, description: body, categoryName: category });
       console.log('res', res.id);
       toast.show('Post added Succesfully');
       // navigation.goBack();
@@ -98,7 +98,7 @@ export const updateNews = data => {
       });
       // bcoz we dont want to add more data from here.
     } catch (error) {
-      dispatch({type: ERRORADDEDNEWS, payload: 'network error'});
+      dispatch({ type: ERRORADDEDNEWS, payload: 'network error' });
     }
   };
 };
@@ -122,7 +122,7 @@ export const deleteNews = id => {
       // });
       // bcoz we dont want to add more data from here.
     } catch (error) {
-      dispatch({type: ERRORADDEDNEWS, payload: 'network error'});
+      dispatch({ type: ERRORADDEDNEWS, payload: 'network error' });
     }
   };
 };

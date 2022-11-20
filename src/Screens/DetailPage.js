@@ -14,7 +14,7 @@ const myIcon = <Icon name="arrowleft" size={20} color="#111" />;
 
 const edit = <Icon name="edit" size={20} color={'black'} />;
 
-const DetailPage = ({navigation, route}) => {
+const DetailPage = ({ navigation, route }) => {
   const id = route.params.id;
   const title = route.params.title;
   const image = route.params.image;
@@ -26,7 +26,7 @@ const DetailPage = ({navigation, route}) => {
       <View>
         {/* <Text>{id}</Text> */}
         <Image
-          source={{uri: image}}
+          source={{ uri: image }}
           style={{
             height: 250,
             width: '100%',
@@ -49,7 +49,7 @@ const DetailPage = ({navigation, route}) => {
             fontFamily: 'Roboto',
           }}>
           {myIcon}
-          <Text style={{color: 'black'}}> Dashboard</Text>
+          <Text style={{ color: 'black' }}> Dashboard</Text>
         </TouchableOpacity>
         <View style={styles.detail1}>
           <ScrollView>
@@ -63,7 +63,7 @@ const DetailPage = ({navigation, route}) => {
               <Text style={styles.tags}>{category}</Text>
               <TouchableOpacity
                 onPress={() => {
-                  navigation.navigate('Edit', {
+                  navigation.navigate('edit', {
                     id,
                     title,
                     description,
@@ -74,9 +74,9 @@ const DetailPage = ({navigation, route}) => {
                 <Text style={styles.tagsEdit}>{edit}</Text>
               </TouchableOpacity>
             </View>
-            <View style={{margin: 25}}>
-              <Text style={{fontSize: 30}}>{title}</Text>
-              <Text style={{padding: 10, fontSize: 14}}>{description}</Text>
+            <View style={{ margin: 25 }}>
+              <Text style={{ fontSize: 30 }}>{title}</Text>
+              <Text style={{ padding: 10, fontSize: 14 }}>{description}</Text>
             </View>
           </ScrollView>
         </View>

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   TouchableOpacity,
   Text,
@@ -11,7 +11,7 @@ import {
   Modal,
   ScrollView,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import toast from 'react-native-simple-toast';
 import firestore from '@react-native-firebase/firestore';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -19,21 +19,22 @@ import storage from '@react-native-firebase/storage';
 import Moment from 'moment';
 import DropDownPicker from 'react-native-dropdown-picker';
 import _ from 'lodash';
-import {getCategory} from '../redux/Actions/categoryActions';
-import {addNews, getAllNews} from '../redux/Actions/postActions';
+import { getCategory } from '../redux/Actions/categoryActions';
+import { addNews, getAllNews } from '../redux/Actions/postActions';
+import { useNavigation } from '@react-navigation/native';
 // import {GETNEWSCATEGORIES} from '../redux/Reducers/newsCategoriesReducer';
 // import {ADDNEWSPOST} from '../redux/Reducers/newsPostsReducer';
 
-export default function AddPost({navigation, route}) {
+export default function AddPost({ route }) {
   const dispatch = useDispatch();
+  const navigation = useNavigation()
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  // const [url, setUrl] = useState('https://via.placeholder.com/150');
 
   const [pic, setPic] = useState('https://via.placeholder.com/150');
 
-  const [state, setState] = useState({data: []});
+  const [state, setState] = useState({ data: [] });
   const [modalVisible, setModalVisible] = useState(false);
   const [select, setSelect] = useState({
     name: 'Select Categories ...',
@@ -61,21 +62,17 @@ export default function AddPost({navigation, route}) {
   // };
 
   useEffect(() => {
-    // selectCategory(state);
-    if ((msg = 'post_added')) {
+    selectCategory(state);
+    if ((msg === 'post_added')) {
       toast.show('post added successfully');
-      // navigation.goBack();
-      // dispatch(getAllNews());
+      navigation.goBack();
+      dispatch(getAllNews());
     }
-    if ((msg = 'network_error')) {
+    if ((msg === 'netw1ork_error')) {
       toast.show('network error');
     }
   }, [msg]);
 
-  useEffect(() => {
-    // selectCategory(state);
-    //selectedCategory();
-  }, []);
 
   const ImagePick = () => {
     //    ImagePicker.openPicker({
@@ -126,15 +123,16 @@ export default function AddPost({navigation, route}) {
       };
 
       dispatch(addNews(data));
+      toast.show('Post added Succesfully');
 
-      // navigation.goBack();
+      navigation.goBack()
+      dispatch(getAllNews());
       // route.params.reloadData();
 
       // await firestore()
       //   .collection('ghosts')
       //   .add(data)
       //   .then(res => {
-      //     toast.show('Post added Succesfully');
       //     setTitle('');
       //     setDescription('');
       //   });
@@ -166,39 +164,39 @@ export default function AddPost({navigation, route}) {
     //dispatch(getCategory());
   };
 
-  // const selectCategory = () => {
-  //   firestore()
-  //     .collection('categoryList')
-  //     .get()
-  //     .then(res => {
-  //       // console.log(res.data);
-  //       var categoryList = [];
-  //       console.log(res.docs);
-  //       res.docs.map(each => {
-  //         categoryList.push({label: each.data().name, value: each.id});
-  //       });
-  //       // setState(prev => ({...prev, data: categoryList}));
-  //       console.log('category listing: ', categoryList);
-  //       setItems([...categoryList]);
-  //     })
-  //     .catch(e => {
-  //       console.log('err: ', e);
-  //     });
-  // };
+  const selectCategory = () => {
+    firestore()
+      .collection('categoryList')
+      .get()
+      .then(res => {
+        // console.log(res.data);
+        var categoryList = [];
+        console.log(res.docs);
+        res.docs.map(each => {
+          categoryList.push({ label: each.data().name, value: each.id });
+        });
+        // setState(prev => ({...prev, data: categoryList}));
+        console.log('category listing: ', categoryList);
+        setItems([...categoryList]);
+      })
+      .catch(e => {
+        console.log('err: ', e);
+      });
+  };
 
   // useEffect(() => {
   //   console.log('state.data', state.data);
   // }, [state.data]);
 
   return (
-    <ScrollView style={{flex: 1}}>
-      <View style={{paddingHorizontal: 10, flex: 1}}>
-        <Text style={{color: 'black', fontSize: 24, paddingVertical: 30}}>
+    <ScrollView style={{ flex: 1 }}>
+      <View style={{ paddingHorizontal: 10, flex: 1 }}>
+        <Text style={{ color: 'black', fontSize: 24, paddingVertical: 30 }}>
           Add a news
         </Text>
         <Text style={styles.mytextcolor}>
           Title{' '}
-          <Text style={{color: 'red', fontSize: 12}}>(min 100 characters)</Text>
+          <Text style={{ color: 'red', fontSize: 12 }}>(min 100 characters)</Text>
         </Text>
         <TextInput
           value={title}
@@ -211,7 +209,7 @@ export default function AddPost({navigation, route}) {
             padding: 3,
           }}
         />
-        <View style={{marginVertical: 10}}>
+        <View style={{ marginVertical: 10 }}>
           <Text style={styles.mytextcolor}>Description</Text>
           <TextInput
             multiline
@@ -273,7 +271,7 @@ export default function AddPost({navigation, route}) {
             onPress={() => {
               ImagePick();
             }}>
-            <Text style={{textAlign: 'center'}}>Tap to upload</Text>
+            <Text style={{ textAlign: 'center' }}>Tap to upload</Text>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
@@ -288,7 +286,7 @@ export default function AddPost({navigation, route}) {
             width: '50%',
           }}
           onPress={Submit}>
-          <Text style={{color: 'black', alignItems: 'center'}}>Add A Post</Text>
+          <Text style={{ color: 'black', alignItems: 'center' }}>Add A Post</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

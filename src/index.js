@@ -5,13 +5,11 @@ import store from './redux/store';
 import Router from './Router'
 
 
-function App() {
-
-
+const App = () => {
 
   return (
     <Provider store={store}>
-        <Router />
+      <Router />
     </Provider>
   );
 }

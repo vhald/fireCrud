@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -15,12 +15,12 @@ import toast from 'react-native-simple-toast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import auth from '@react-native-firebase/auth';
 import _ from 'lodash';
-import {getAllNews} from '../redux/Actions/postActions';
-import {getCategory} from '../redux/Actions/categoryActions';
+import { getAllNews } from '../redux/Actions/postActions';
+import { getCategory } from '../redux/Actions/categoryActions';
 
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-const CategoryList = ({navigation}) => {
+const CategoryList = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const categories = useSelector(state => state.categories.newsCategories);
@@ -28,7 +28,7 @@ const CategoryList = ({navigation}) => {
   const [sectiondata, set_sectiondata] = useState([]);
 
   useEffect(() => {
-    //dispatch(getCategory());
+    // dispatch(getCategory());
     console.log(categories);
   }, []);
 
@@ -46,7 +46,7 @@ const CategoryList = ({navigation}) => {
             tmp2.push(each2);
           }
         });
-        data.push({title: each, data: tmp2});
+        data.push({ title: each, data: tmp2 });
       });
       console.log('data finally', data);
       set_sectiondata(data);
@@ -67,7 +67,7 @@ const CategoryList = ({navigation}) => {
           borderBottomColor: 'black',
           borderBottomWidth: 0.5,
         }}>
-        <Text style={{paddingLeft: 10, color: 'black'}}>{item.item.label}</Text>
+        <Text style={{ paddingLeft: 10, color: 'black' }}>{item.item.label}</Text>
       </View>
     );
   };
@@ -84,7 +84,7 @@ const CategoryList = ({navigation}) => {
           sections={sectiondata}
           keyExtractor={(item, index) => index}
           renderItem={renderItem}
-          renderSectionHeader={({section: {title}}) => (
+          renderSectionHeader={({ section: { title } }) => (
             <View
               style={{
                 height: 50,
@@ -92,7 +92,7 @@ const CategoryList = ({navigation}) => {
                 borderBottomColor: 'black',
                 borderBottomWidth: 0.5,
               }}>
-              <Text style={{fontWeight: 'bold', color: 'black'}}>
+              <Text style={{ fontWeight: 'bold', color: 'black' }}>
                 {title.label}
               </Text>
             </View>

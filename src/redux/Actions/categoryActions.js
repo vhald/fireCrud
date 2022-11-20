@@ -21,12 +21,12 @@ export const getCategory = () => {
           });
         });
         console.log('category listing: ', categoryList);
-        categoryList.push({label: 'select an item', value: null});
-        dispatch({type: GETNEWSCATEGORIES, payload: categoryList});
+        categoryList.push({ label: 'select an item', value: null });
+        dispatch({ type: GETNEWSCATEGORIES, payload: categoryList });
       })
       .catch(e => {
         console.log('err: ', e);
-        dispatch({type: GETNEWSCATEGORIES, payload: []});
+        dispatch({ type: GETNEWSCATEGORIES, payload: [] });
       });
   };
 };
@@ -41,17 +41,17 @@ export const addcategory = data => {
         type: ADDEDCATEGORY,
         payload: {
           msg: 'category added successfully',
-          data: {label: data.name, value: res.id, parentID: data.parentID},
+          data: { label: data.name, value: res.id, parentID: data.parentID },
         },
       });
     } catch (error) {
-      dispatch({type: ERRORADDEDCATEGORY, payload: 'network error'});
+      dispatch({ type: ERRORADDEDCATEGORY, payload: 'network error' });
     }
   };
 };
 
 export const loaderStatus = data => {
   return dispatch => {
-    dispatch({type: LOADER, payload: data});
+    dispatch({ type: LOADER, payload: data });
   };
 };

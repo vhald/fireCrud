@@ -7,13 +7,16 @@ import {
   Button,
   TouchableOpacity,
   ToastAndroid,
+  ScrollView
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
 import ImagePicker from 'react-native-image-crop-picker';
 import firestore from '@react-native-firebase/firestore';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { addNews } from '../redux/Actions/postActions';
 
-const EditPage = ({navigation, route}) => {
+const EditPage = ({ navigation, route }) => {
   const id = route.params.id;
   const title = route.params.title;
   const image = route.params.image;
@@ -33,6 +36,8 @@ const EditPage = ({navigation, route}) => {
     setBody(description);
     setHead(title);
     setCategory(category);
+    // dispatch(addNews(data));
+
   }, []);
 
   // useEffect(() => {
@@ -58,7 +63,7 @@ const EditPage = ({navigation, route}) => {
     }).then(image => {
       setPic(image.path);
     });
-  };
+  }
 
   const onSubmit = () => {
     console.log('Inside insubmit: ' + head);
@@ -67,7 +72,7 @@ const EditPage = ({navigation, route}) => {
     console.log('Inside category: ' + categoryName);
     dispatch(addNews(data));
     navigation.goBack();
-    route.params.reloadData();
+    // route.params.reloadData();
   };
 
   return (
@@ -98,7 +103,7 @@ const EditPage = ({navigation, route}) => {
             height: '40%',
             width: '80%',
             margin: 30,
-            resizeMode: 'stretch',
+            resizeMode: "contain",
           }}
         />
       </TouchableOpacity>
